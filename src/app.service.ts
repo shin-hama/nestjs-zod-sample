@@ -2,14 +2,14 @@ import { Injectable } from '@nestjs/common';
 
 import z from 'zod';
 
+const NestedSchema = z.object({
+  hoge: z.number().positive().default(1),
+  fuga: z.string().optional(),
+});
+
 const Schema = z.object({
   name: z.string().default('test'),
-  nested: z
-    .object({
-      hoge: z.number().positive().default(1),
-      fuga: z.string().optional(),
-    })
-    .default({ hoge: 1 }),
+  nested: NestedSchema.default(NestedSchema.parse({})),
 });
 
 @Injectable()
